@@ -1,0 +1,17 @@
+dash==1.20.0
+dash-carbon-components==0.1.6
+dash-cytoscape==0.2.0
+dash-extensions==0.0.53
+Flask==1.1.2
+flask-oidc==1.4.0
+numpy==1.21.1
+pandas==1.2.4
+plotly==4.14.3
+urllib3==1.26.7
+gunicorn==20.1.0
+cdd==0.1.4
+numpy==1.21.1
+textworld==1.2.0
+tqdm==4.50.2
+requests==2.26.0
+matplotlib==3.5.0
