@@ -121,6 +121,7 @@ def get_agent_actions(env, obs, score, done, info,
                     ns_agent_actions.append([adm_comm, 0])
 
         except Exception:
+            facts = {}
             selected_facts_commonsense = None
             for adm_comm in all_actions:
                 ns_agent_actions.append([adm_comm, 0])
