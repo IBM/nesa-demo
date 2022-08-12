@@ -7,7 +7,7 @@ configuration_layout = [
     html.Div(style={'display': 'flex',
                     'height': '40px',
                     'alignItems': 'center'}, children=[
-        html.H5(style={'paddingLeft': '16px'}, children='Configuration'),
+        html.H5(style={'padding-left': '16px'}, children='Configuration'),
     ]),
     dca.Tabs(children=[
         dca.Tab(value='filters', label='Games', children=[
@@ -17,7 +17,7 @@ configuration_layout = [
                     'height': 'calc(100% - 130px)',
                     'overflow': 'auto',
                     'padding': '8px',
-                    'paddingBottom': '96px'
+                    'padding-bottom': '96px'
                 },
                 children=filters_layout
             )
@@ -35,7 +35,7 @@ configuration_layout = [
         children=[
             dca.Button(id='configuration_interact_games_reset',
                        size='sm', children='Reset', kind='secondary',
-                       style={'marginRight': '1px'}),
+                       style={'margin-right': '1px'}),
             dca.Button(id='configuration_interact_games_apply',
                        size='sm', children='Apply', kind='primary')
         ])

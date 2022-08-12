@@ -1,6 +1,6 @@
-[submodule "third_party/loa"]
-	path = third_party/loa
-	url = git@github.com:IBM/LOA.git
 [submodule "third_party/commonsense_rl"]
 	path = third_party/commonsense_rl
 	url = git@github.com:daiki-kimura/commonsense-rl.git
+[submodule "third_party/loa"]
+	path = third_party/loa
+	url = git@github.com:IBM/LOA.git

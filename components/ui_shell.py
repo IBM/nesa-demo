@@ -20,7 +20,7 @@ def ui_shell(name: str, header, sidebar):
                 'width': '100%',
                 'overflow': 'auto',
                 'backgroundColor': '#f4f4f4',
-                'marginTop': '48px',
+                'margin-top': '48px',
             },
         ),
         html.Div(id='dummy_div')

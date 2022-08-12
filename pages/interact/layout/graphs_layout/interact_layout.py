@@ -1,5 +1,6 @@
 import dash_carbon_components as dca
 import dash_html_components as html
+
 from components import dialog_row, fired_rule_card, next_actions_row
 
 interact_layout = dca.Grid(
@@ -10,9 +11,10 @@ interact_layout = dca.Grid(
     children=[
         dca.Row(
             children=[
-                dca.Column(columnSizes=['sm-4'], children=[
+                dca.Column(columnSizes=['sm-5'], children=[
                     dca.Card(
                         id='interactive_agent_chat',
+                        title='Interaction with environment',
                         children=[
                         ],
                         style={
@@ -23,20 +25,24 @@ interact_layout = dca.Grid(
                             'width': '100%'
                         }
                     )
-                ])
+                ], style={'padding-left': '16px',
+                          'padding-right': '16px'})
             ],
         ),
         dca.Row(
             children=[
-                dca.Column(columnSizes=['sm-3'], children=[
+                dca.Column(columnSizes=['sm-5'], children=[
+                    # dca.Column(columnSizes=['sm-3'], children=[
                     dca.Card(
                         id='select_next_action_card',
+                        title='Action selector to perform',
                         children=[
-                            html.H3('',
-                                    id='message_for_top_of_action_selector',
-                                    style={
-                                        'padding-bottom': '0px'
-                                    }),
+                            html.P('',
+                                   id='message_for_top_of_action_selector',
+                                   style={
+                                       'padding-bottom': '16px',
+                                       'padding-left': '10px'
+                                   }),
 
                             html.Div(
                                 id='next_action_row',
@@ -53,12 +59,15 @@ interact_layout = dca.Grid(
                             ),
                         ],
                         style={
-                            'margin-top': '20px',
-                            'margin-bottom': '20px',
+                            'margin-top': '16px',
+                            'margin-bottom': '16px',
                             'height': 'calc(100% - 50px)'
                         }
                     ),
-                ]),
+                ], style={'margin-left': '16px',
+                          'margin-top': '16px',
+                          'padding-right': '16px',
+                          'width': '100%'}),
                 dca.Column(columnSizes=['sm-1'], children=[
                     dca.Card(
                         id='apply_next_action_card',
@@ -79,18 +88,21 @@ interact_layout = dca.Grid(
                                 id='game_score', children='',
                                 style={
                                     'text-align': 'center',
-                                    'margin-top': '5%',
-                                    'margin-bottom': '5%'
+                                    'margin-top': '16px',
+                                    'margin-bottom': '16px'
                                 }
                             ),
                         ],
                         style={
-                            'margin-top': '20px',
+                            'margin-top': '16px',
                             'margin-bottom': '0px',
-                            'height': 'calc(100% - 50px)'
+                            'height': '0px',
+                            # 'height': 'calc(100% - 50px)',
                         }
                     ),
-                ]),
+                ], style={'flex': '0 0 24%',
+                          'visibility': 'hidden',
+                          'height': '0px'}),
             ],
         ),
     ])

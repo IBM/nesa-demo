@@ -1,5 +1,5 @@
 import dash_html_components as html
-
+import dash_core_components as dcc
 from ... import RIGHT_TOP_MESSAGE
 from .configuration_layout import configuration_layout
 from .filters_layout import filters_layout
@@ -22,9 +22,9 @@ layout = [
             html.Div(style={'display': 'flex', 'alignItems': 'flex-end'},
                      children=[
                          html.Span(id='TCV_value'),
-                         html.Span(style={'marginLeft': '8px'},
+                         html.Span(style={'margin-left': '8px'},
                                    id='Entitled_value'),
-                         html.Span(style={'marginLeft': '8px'},
+                         html.Span(style={'margin-left': '8px'},
                                    children=[RIGHT_TOP_MESSAGE])
             ])
         ]
@@ -49,5 +49,8 @@ layout = [
                 'backgroundColor': 'white'
             }, children=configuration_layout),
         ]
-    )
+    ),
+    dcc.Store(id='lnn_state'),
+    dcc.Store(id='use_recommendation'),
+    dcc.Store(id='inspector_state'),
 ]
