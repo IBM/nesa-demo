@@ -20,10 +20,10 @@ layout = [
             html.Div(style={'display': 'flex', 'alignItems': 'flex-end'},
                      children=[
                 html.Span(id='TCV_value'),
-                html.Span(style={'marginLeft': '8px'},
+                html.Span(style={'margin-left': '8px'},
                           id='Entitled_value'),
                 html.Span(
-                    style={'marginLeft': '8px'},
+                    style={'margin-left': '8px'},
                     children=[RIGHT_TOP_MESSAGE]
                 )
             ])

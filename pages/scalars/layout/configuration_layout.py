@@ -4,8 +4,11 @@ import dash_html_components as html
 from .filters_layout import filters_layout
 
 configuration_layout = [
-    html.Div(style={'display': 'flex', 'height': '40px', 'alignItems': 'center'}, children=[
-        html.H5(style={'paddingLeft': '16px'}, children='Configuration'),
+    html.Div(style={'display': 'flex', 'height': '40px',
+                    'alignItems': 'center'},
+             children=[
+                 html.H5(style={'padding-left': '16px'},
+                         children='Configuration'),
     ]),
     dca.Tabs(children=[
         dca.Tab(value='filters', label='Filters', children=[
@@ -15,7 +18,7 @@ configuration_layout = [
                     'height': 'calc(100% - 130px)',
                     'overflow': 'auto',
                     'padding': '8px',
-                    'paddingBottom': '96px'
+                    'padding-bottom': '96px'
                 },
                 children=filters_layout
             )
@@ -33,7 +36,7 @@ configuration_layout = [
         children=[
             dca.Button(id='configuration_scalars_filters_reset',
                        size='sm', children='Reset', kind='secondary',
-                       style={'marginRight': '1px'}),
+                       style={'margin-right': '1px'}),
             dca.Button(id='configuration_scalars_filters_apply',
                        size='sm', children='Apply', kind='primary')
         ])

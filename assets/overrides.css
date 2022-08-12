@@ -1,0 +1,7 @@
+div.bx--col-sm-2 div.card {
+    height: 100%; overflow-y: auto;
+}
+
+div.bx--col-sm-2.hide-scroll div.card{
+    height: 100%; overflow-y: clip !important;
+}

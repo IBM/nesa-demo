@@ -1,0 +1,96 @@
+{
+    "epochs": 1,
+    "input": [
+        "carry(x)",
+        "empty(y)",
+        "at_location(x,y)",
+        "true"
+    ],
+    "network": {
+        "and1": {
+            "gate_type": "AND",
+            "parents": [
+                "carry(x)",
+                "empty(y)",
+                "at_location(x,y)"
+            ],
+            "weights": [
+                [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            ]
+        },
+        "and2": {
+            "gate_type": "AND",
+            "parents": [
+                "carry(x)",
+                "empty(y)",
+                "at_location(x,y)"
+            ],
+            "weights": [
+                [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            ]
+        },
+        "imply1": {
+            "gate_type": "IMPLY",
+            "parents": [
+                "and1"
+            ],
+            "weights": [
+                [
+                    1.0
+                ]
+            ]
+        },
+        "imply2": {
+            "gate_type": "IMPLY",
+            "parents": [
+                "and2"
+            ],
+            "weights": [
+                [
+                    1.0
+                ]
+            ]
+        },
+        "insert(x,y)": {
+            "gate_type": "NODE",
+            "parents": [
+                "imply1"
+            ],
+            "weights": [
+                [
+                    1.0
+                ]
+            ]
+        },
+        "put(x,y)": {
+            "gate_type": "NODE",
+            "parents": [
+                "imply2"
+            ],
+            "weights": [
+                [
+                    1.0
+                ]
+            ]
+        },
+        "take(x)": {
+            "gate_type": "NODE",
+            "parents": [
+                "true"
+            ],
+            "weights": [
+                [
+                    1.0
+                ]
+            ]
+        }
+    }
+}
