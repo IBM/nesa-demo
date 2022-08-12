@@ -9,6 +9,7 @@ This repository contains a demo for Neuro-Symbolic Agent (NeSA), which is specif
 
 ```bash
 git clone --recursive git@github.com:IBM/nesa-demo.git
+cd nesa-demo
 conda create -n nesa-demo python=3.8
 conda activate nesa-demo
 conda install pytorch=1.10.0 torchvision torchaudio -c pytorch
