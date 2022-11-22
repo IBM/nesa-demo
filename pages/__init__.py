@@ -8,10 +8,13 @@ LEVELS = [EASY_LEVEL]
 DL_AGENT = True
 LOA_AGENT = True
 
-MESSAGE_FOR_SELECT_NEXT_ACTION = 'Select next action'
 MESSAGE_FOR_DONE = \
-    'The game is Done. Please reload the page, if you want to retry.'
+    'The game is done. Please reload the page, if you want to retry.'
+MESSAGE_FOR_BEFORE_DONE = \
+    'Please select an action below. ' + \
+    'You can manually select an action or choose a recommendation ' + \
+    'from one of the trained models.'
 
 REPO_URL = 'https://github.com/IBM/nesa-demo'
 LOA_REPO_URL = 'https://github.com/IBM/LOA'
-RIGHT_TOP_MESSAGE = 'Repo: ' + REPO_URL
+RIGHT_TOP_MESSAGE = 'Repository: ' + REPO_URL

@@ -11,7 +11,7 @@ def dialog_row(is_agent: bool, text: str):
     if is_agent:
         img = 'assets/robot-icon.jpeg'
         float_dir = 'right'
-        margins = {'marginLeft': 'calc(100% - 40px)'}
+        margins = {'margin-left': 'calc(100% - 40px)'}
     else:
         img = 'assets/globe-icon.png'
         float_dir = 'left'
@@ -35,8 +35,8 @@ def dialog_row(is_agent: bool, text: str):
                                  style={'height': '50px',
                                         'width': '50px',
                                         'float': float_dir,
-                                        'marginRight': '20px',
-                                        'marginLeft': '20px'}),
+                                        'margin-right': '20px',
+                                        'margin-left': '20px'}),
                         html.P(text,
                                style={
                                    'float': float_dir,

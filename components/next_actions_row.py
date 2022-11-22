@@ -1,13 +1,13 @@
 from colorsys import hls_to_rgb
 
-from numpy import tile, zeros
-
 import dash_carbon_components as dca
 import dash_core_components as dcc
 import dash_html_components as html
 import plotly.graph_objects as go
+from numpy import tile, zeros
 
 NEXT_ACTION_MIN_CONFIDENCE = 0.05
+BUTTON_TITLE_FOR_GO_INSPECTION = 'Check inside of the model'
 
 
 def next_actions_row(all_actions: list,
@@ -45,7 +45,7 @@ def next_actions_row(all_actions: list,
             ]
         )]
 
-    first_selection = 'Choose from all possible action list'
+    first_selection = 'Select an action'
     dropdown_options = [
         {
             'label': first_selection,
@@ -67,7 +67,7 @@ def next_actions_row(all_actions: list,
     )
 
     action_submit = dca.Button(
-        'Perform action',
+        'Perform this action',
         id='submit_action',
         kind='primary',
         style={
@@ -78,17 +78,20 @@ def next_actions_row(all_actions: list,
 
     all_actions_card = dca.Card(
         id='all_actions_card',
-        title='All Possible Actions',
+        title='All possible actions',
         children=[
             html.Ul(
                 children=all_actions_list,
                 className='lead',
                 style={
-                    'paddingTop': '10px',
-                    'paddingBottom': '10px',
+                    'padding-top': '10px',
+                    'padding-bottom': '10px',
                     'listStyleType': 'none'
                 }
             ),
+            html.Br(),
+            dca.Column(actions_dropdown, columnSizes=['md-9']),
+            dca.Column(action_submit, columnSizes=['md-9'])
         ],
         style={
             'width': '100%',
@@ -115,7 +118,8 @@ def next_actions_row(all_actions: list,
     agent_1_pull[agent_1_max_idx] = 0.3
 
     agent_layout = \
-        go.Layout(title='Click to perform action', hovermode='closest',
+        go.Layout(title='Click to perform a recommended action',
+                  hovermode='closest',
                   height=330)
 
     agent_1_rules_children = list()
@@ -123,7 +127,7 @@ def next_actions_row(all_actions: list,
         for k, v in agent_1_rules.items():
             if v != '':
                 agent_1_rules_children.append(
-                    k + ' = ' + v.replace('atlocation', 'at_location'))
+                    v.replace('atlocation', 'at_location') + ' → ' + k)
                 agent_1_rules_children.append(html.Br())
         agent_1_rules_children = agent_1_rules_children[:-1]
 
@@ -147,12 +151,13 @@ def next_actions_row(all_actions: list,
 
     agent_1_actions_card = dca.Card(
         id='agent_1_actions_card',
-        title='Recommended actions from NeSA (LOA)',
+        title='Neuro-symbolic agent',
         children=[
             dcc.Graph(
                 id='agent_1_actions_pie_chart',
                 figure=go.Figure(
                     data=[go.Pie(
+                        name="",
                         labels=agent_1_labels_list,
                         values=agent_1_values_list,
                         sort=False,
@@ -161,21 +166,33 @@ def next_actions_row(all_actions: list,
                         pull=agent_1_pull,
                         textposition=agent_1_text_pos_list,
                         showlegend=False,
+                        hovertemplate="%{label}<br>%{percent}",
                     )],
                     layout=agent_layout
                 )),
-            html.P('Current Logical Facts: ',
+
+            html.P('Current logical facts & commonsense: ',
                    style={'text-align': 'left', 'font-weight': 'bold'}),
             html.P(
                 id='logical_facts_p',
                 children=agent_1_logical_facts_children,
                 style={'text-align': 'center'}),
-            html.P('Trained Rules: ',
+            html.Br(),
+            html.P('Trained rules: ',
                    style={'text-align': 'left', 'font-weight': 'bold'}),
             html.P(
                 id='loa_rule_p',
                 children=agent_1_rules_children,
                 style={'text-align': 'center'}),
+            html.Br(),
+            html.Br(),
+            dca.Button(id='agent_1_details_button',
+                       size='sm', children=BUTTON_TITLE_FOR_GO_INSPECTION,
+                       kind='primary',
+                       style={'margin-left': 'auto',
+                              'margin-right': 'auto',
+                              'display': 'block',
+                              'height': '40px'}),
 
         ],
         style={'width': '100%'}
@@ -201,12 +218,13 @@ def next_actions_row(all_actions: list,
 
     agent_2_actions_card = dca.Card(
         id='agent_2_actions_card',
-        title='Recommended actions from DL-Agent',
+        title='Deep learning agent',
         children=[
             dcc.Graph(
                 id='agent_2_actions_pie_chart',
                 figure=go.Figure(
                     data=[go.Pie(
+                        name="",
                         labels=agent_2_labels_list,
                         values=agent_2_values_list,
                         sort=False,
@@ -214,10 +232,21 @@ def next_actions_row(all_actions: list,
                                     line=dict(color='#efefef', width=1)),
                         pull=agent_2_pull,
                         textposition=agent_2_text_pos_list,
-                        showlegend=False
+                        showlegend=False,
+                        hovertemplate="%{label}<br>%{percent}",
                     )],
                     layout=agent_layout
                 )),
+            html.Br(),
+            html.Br(),
+            dca.Button(id='agent_2_details_button',
+                       size='sm', children=BUTTON_TITLE_FOR_GO_INSPECTION,
+                       kind='primary',
+                       disabled=True,
+                       style={'margin-left': 'auto',
+                              'margin-right': 'auto',
+                              'display': 'block',
+                              'height': '40px'}),
         ],
         style={'width': '100%'}
     )
@@ -226,27 +255,18 @@ def next_actions_row(all_actions: list,
         children=[
             dca.Row(
                 children=[
-                    dca.Column(actions_dropdown, columnSizes=['md-6'],
-                               style={'height': '1.5em'}),
-                    dca.Column(action_submit, columnSizes=['md-2'])
+                    dca.Column(all_actions_card, columnSizes=['md-2'],
+                               style={'width': '450px'}),
+                    dca.Column(agent_1_actions_card, columnSizes=['md-3'],
+                               style={'width': '450px'}),
+                    dca.Column(agent_2_actions_card, columnSizes=['md-3'],
+                               style={'width': '450px'})
                 ],
                 style={
-                    'width': '100%',
-                    'margin-top': '10pt',
-                }
-            ),
-            dca.Row(
-                children=[
-                    dca.Column(all_actions_card, columnSizes=['md-2']),
-                    dca.Column(agent_1_actions_card, columnSizes=['md-3']),
-                    dca.Column(agent_2_actions_card, columnSizes=['md-3'])
-                ],
-                style={
-                    'margin-top': '10pt',
                 }
             )
         ],
-        style={'paddingLeft': '2em'}
+        style={'padding-left': '2em'}
     ) if not done else dca.Row(children=[])
 
     return final_row

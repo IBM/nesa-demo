@@ -1,6 +1,4 @@
 import dash_carbon_components as dca
-import dash_html_components as html
-import dash_table
 from dash_core_components import Graph
 from dash_extensions import Download
 
@@ -10,7 +8,7 @@ def graph_card(graph_id: str, graph_name: str, graph_info: str = '',
     if radios is None:
         radios = []
     children = [
-        Graph(id=f'{graph_id}', style={'height': f'{height}px'}),
+        Graph(id=f'{graph_id}', style={'height': f'{height-50}px'}),
         Download(id=f'{graph_id}_download'),
     ]
     i = 0
@@ -27,8 +25,4 @@ def graph_card(graph_id: str, graph_name: str, graph_info: str = '',
         id=f'{graph_id}_card',
         title=graph_name,
         info=graph_info,
-        actions=[{'displayName': 'Download CSV',
-                  'actionPropName': 'download'},
-                 {'displayName': 'Download Excel',
-                 'actionPropName': 'download_excel'}],
         children=children)

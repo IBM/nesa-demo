@@ -9,6 +9,7 @@ This repository contains a demo for Neuro-Symbolic Agent (NeSA), which is specif
 
 ```bash
 git clone --recursive git@github.com:IBM/nesa-demo.git
+cd nesa-demo
 conda create -n nesa-demo python=3.8
 conda activate nesa-demo
 conda install pytorch=1.10.0 torchvision torchaudio -c pytorch
@@ -48,7 +49,7 @@ cd third_party/commonsense_rl/
 python -u train_agent.py --agent_type knowledgeaware --game_dir ./games/twc --game_name *.ulx --difficulty_level easy --graph_type world --graph_mode evolve --graph_emb_type glove --world_evolve_type manual --initial_seed 0 --nruns 1
 ```
 
-- LOA (NeSA method)
+- Neuro-Symbolic Agent (LOA)
 
 ```bash
 cd third_party/loa/

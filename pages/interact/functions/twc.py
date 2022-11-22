@@ -1,3 +1,4 @@
+import copy
 import glob
 import os
 import random
@@ -47,6 +48,23 @@ def info2infos(info):
     return {k: [v] for k, v in info.items()}
 
 
+def convert_instance_for_commonsense(cs_raw, is_instance_raw):
+    cs_list = list()
+    for cs in cs_raw:
+        li = list()
+        for o in cs:
+            found = False
+            for ins in is_instance_raw:
+                if o == ins[1]:
+                    li.append(ins[0])
+                    found = True
+                    break
+            if not found:
+                li.append(o)
+        cs_list.append(li)
+    return cs_list
+
+
 def get_agent_actions(env, obs, score, done, info,
                       action, scored_action_history,
                       loa_agent=None, dl_agent=None):
@@ -62,25 +80,26 @@ def get_agent_actions(env, obs, score, done, info,
     else:
         ns_agent_actions = list()
 
-        facts = env.get_logical_state(info)
+        env_facts = env.get_logical_state(info)
         obs_text = get_formatted_obs_text(info)
+        commonsense = dict()
 
         try:
-            verbnet_facts, _ = rest_amr.obs2facts(obs_text,
-                                                  mode='both',
-                                                  verbose=True)
-
+            facts, _ = rest_amr.obs2facts(obs_text, mode='propbank')
             rest_amr.save_cache()
 
-            verbnet_facts['atlocation'] = facts['atlocation']
-            verbnet_facts['is_instance'] = facts['is_instance']
+            facts_cs = copy.deepcopy(facts)
+            facts_cs['atlocation'] = env_facts['atlocation']
+            facts_cs['is_instance'] = env_facts['is_instance']
 
-            logical_facts = \
+            commonsense['at_location'] = \
+                convert_instance_for_commonsense(env_facts['atlocation'],
+                                                 env_facts['is_instance'])
+
+            selected_facts_commonsense = \
                 {
-                    'at_location': [list(x) for x in
-                                    verbnet_facts['atlocation']],
-                    'carry': verbnet_facts['carry']
-                    if 'carry' in verbnet_facts else []
+                    'at_location': commonsense['at_location'],
+                    'carry': facts['carry'] if 'carry' in facts else []
                 }
 
             for adm_comm in all_actions:
@@ -91,7 +110,7 @@ def get_agent_actions(env, obs, score, done, info,
                     logic_vector, all_preds = \
                         obtain_predicates_logic_vector(
                             rule_arity, x, y,
-                            facts=verbnet_facts,
+                            facts=facts_cs,
                             template=loa_agent.arity_predicate_templates)
                     logic_vector = logic_vector.unsqueeze(0)
                     yhat = loa_agent.pi.forward_eval(logic_vector,
@@ -102,7 +121,8 @@ def get_agent_actions(env, obs, score, done, info,
                     ns_agent_actions.append([adm_comm, 0])
 
         except Exception:
-            logical_facts = None
+            facts = {}
+            selected_facts_commonsense = None
             for adm_comm in all_actions:
                 ns_agent_actions.append([adm_comm, 0])
 
@@ -149,4 +169,5 @@ def get_agent_actions(env, obs, score, done, info,
         for i, a in enumerate(all_actions):
             dl_agent_actions.append([a, values[i]])
 
-    return all_actions, ns_agent_actions, dl_agent_actions, logical_facts
+    return all_actions, ns_agent_actions, dl_agent_actions, \
+        facts, commonsense, selected_facts_commonsense
